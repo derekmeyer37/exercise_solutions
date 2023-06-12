@@ -1,0 +1,5 @@
+---
+title: "INSNA Sunbelt Conference - Exercise Solutions"
+---
+Solutions to all exercises in parts 1, 2, and 3 found in the epiworldR workshop website. 
+

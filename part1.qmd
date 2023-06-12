@@ -1,0 +1,43 @@
+---
+title: "Part 1 Solutions"
+---
+
+## Exercise 1
+```{r, fig.height=10}
+# Initialize model
+model_seir <- ModelSEIR("COVID-19", 
+                        prevalence = 0.01, 
+                        infectiousness = 0.9,
+                        recovery = 1/4,
+                        incubation_days = 4)
+
+# Adding a small world population
+agents_smallworld(
+ model_seir,
+ n = 10000,
+ k = 5,
+ d = FALSE,
+ p = .01
+ )
+ 
+# Running model
+run(model_seir, ndays = 100, seed = 1912)
+
+# Plotting
+plot(model_seir)
+
+# Day of peak infections 
+x <- get_hist_total(model_seir)
+which.max(x$counts[x$state == "Infected"]) - 1
+# Number of infections on peak day
+max(x$counts[x$state == "Infected"])
+```
+
+
+## Exercise 2
+```{r, fig.height=10}
+repnum <- get_reproductive_number(model_seir)
+plot(repnum, type = 'b')
+```
+
+

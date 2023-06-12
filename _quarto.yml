@@ -1,0 +1,25 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "exercise_solutions"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - href: part1.qmd
+        text: "Part 1"
+      - href: part2.qmd
+        text: "Part 2"
+      - href: part3.qmd 
+        text: "Part 3"
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true
+
+editor: visual
+
