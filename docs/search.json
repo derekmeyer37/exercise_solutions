@@ -1,0 +1,72 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "INSNA Sunbelt Conference - Exercise Solutions",
+    "section": "",
+    "text": "Solutions to all exercises in parts 1, 2, and 3 found in the epiworldR workshop website."
+  },
+  {
+    "objectID": "part1.html",
+    "href": "part1.html",
+    "title": "Part 1 Solutions",
+    "section": "",
+    "text": "library(epiworldR)\n\n# Initialize model\nmodel_seir &lt;- ModelSEIR(\"COVID-19\", \n                        prevalence = 0.01, \n                        infectiousness = 0.9,\n                        recovery = 1/4,\n                        incubation_days = 4)\n\n# Adding a small world population\nagents_smallworld(\n model_seir,\n n = 10000,\n k = 5,\n d = FALSE,\n p = .01\n )\n \n# Running model\nrun(model_seir, ndays = 100, seed = 1912)\n\n_________________________________________________________________________\nRunning the model...\n||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| done.\n done.\n\n# Plotting\nplot(model_seir)\n\n\n\n# Day of peak infections \nx &lt;- get_hist_total(model_seir)\nwhich.max(x$counts[x$state == \"Infected\"]) - 1\n\n[1] 12\n\n# Number of infections on peak day\nmax(x$counts[x$state == \"Infected\"])\n\n[1] 1010"
+  },
+  {
+    "objectID": "part1.html#exercise-1",
+    "href": "part1.html#exercise-1",
+    "title": "Part 1 Solutions",
+    "section": "",
+    "text": "library(epiworldR)\n\n# Initialize model\nmodel_seir &lt;- ModelSEIR(\"COVID-19\", \n                        prevalence = 0.01, \n                        infectiousness = 0.9,\n                        recovery = 1/4,\n                        incubation_days = 4)\n\n# Adding a small world population\nagents_smallworld(\n model_seir,\n n = 10000,\n k = 5,\n d = FALSE,\n p = .01\n )\n \n# Running model\nrun(model_seir, ndays = 100, seed = 1912)\n\n_________________________________________________________________________\nRunning the model...\n||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| done.\n done.\n\n# Plotting\nplot(model_seir)\n\n\n\n# Day of peak infections \nx &lt;- get_hist_total(model_seir)\nwhich.max(x$counts[x$state == \"Infected\"]) - 1\n\n[1] 12\n\n# Number of infections on peak day\nmax(x$counts[x$state == \"Infected\"])\n\n[1] 1010"
+  },
+  {
+    "objectID": "part1.html#exercise-2",
+    "href": "part1.html#exercise-2",
+    "title": "Part 1 Solutions",
+    "section": "Exercise 2",
+    "text": "Exercise 2\n\nrepnum &lt;- get_reproductive_number(model_seir)\nplot(repnum, type = 'b')"
+  },
+  {
+    "objectID": "part2.html",
+    "href": "part2.html",
+    "title": "Part 2 Solutions",
+    "section": "",
+    "text": "library(epiworldR)\n\n# Initialize model\nmodel_sir &lt;- ModelSIRCONN(\n  name              = \"Flu\",\n  n                 = 10000, \n  prevalence        = 0.0001, \n  contact_rate      = 2.1,\n  prob_transmission = 0.5,\n  prob_recovery     = 1/4\n  )\n\n# Building the virus\ndelta &lt;- virus(name = \"Delta\", prob_infecting = .3, prob_recovery = 1/4)\n\n# Adding the virus to the model\nadd_virus(model_sir, delta, .001)\n\n# Run the model\nrun(model_sir, ndays = 75, seed = 1912)\n\n_________________________________________________________________________\nRunning the model...\n||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| done.\n done.\n\n# Reproductive number \nrepnum &lt;- get_reproductive_number(model_sir)\n\n# Plotting\nop &lt;- par(mfrow = c(2,1))\nplot(model_sir)\nplot(repnum, type=\"b\")\n\n\n\npar(op)\n\n# Day of peak infections \nx &lt;- get_hist_total(model_sir)\nwhich.max(x$counts[x$state == \"Infected\"]) - 1\n\n[1] 16\n\n# Number of infections on peak day\nmax(x$counts[x$state == \"Infected\"])\n\n[1] 3798"
+  },
+  {
+    "objectID": "part2.html#exercise-1",
+    "href": "part2.html#exercise-1",
+    "title": "Part 2 Solutions",
+    "section": "",
+    "text": "library(epiworldR)\n\n# Initialize model\nmodel_sir &lt;- ModelSIRCONN(\n  name              = \"Flu\",\n  n                 = 10000, \n  prevalence        = 0.0001, \n  contact_rate      = 2.1,\n  prob_transmission = 0.5,\n  prob_recovery     = 1/4\n  )\n\n# Building the virus\ndelta &lt;- virus(name = \"Delta\", prob_infecting = .3, prob_recovery = 1/4)\n\n# Adding the virus to the model\nadd_virus(model_sir, delta, .001)\n\n# Run the model\nrun(model_sir, ndays = 75, seed = 1912)\n\n_________________________________________________________________________\nRunning the model...\n||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| done.\n done.\n\n# Reproductive number \nrepnum &lt;- get_reproductive_number(model_sir)\n\n# Plotting\nop &lt;- par(mfrow = c(2,1))\nplot(model_sir)\nplot(repnum, type=\"b\")\n\n\n\npar(op)\n\n# Day of peak infections \nx &lt;- get_hist_total(model_sir)\nwhich.max(x$counts[x$state == \"Infected\"]) - 1\n\n[1] 16\n\n# Number of infections on peak day\nmax(x$counts[x$state == \"Infected\"])\n\n[1] 3798"
+  },
+  {
+    "objectID": "part2.html#exercise-2",
+    "href": "part2.html#exercise-2",
+    "title": "Part 2 Solutions",
+    "section": "Exercise 2",
+    "text": "Exercise 2\n\n# Removing Delta variant\nrm_virus(model_sir, 1)\n\n# Creating a tool\nmask_wearing &lt;- tool(\n  name = \"Mask\",\n  susceptibility_reduction = 0.0,\n  transmission_reduction   = 0.3, # Only transmission\n  recovery_enhancer        = 0.0,\n  death_reduction          = 0.0\n)\n\n# Adding tool to the model\nadd_tool(model_sir, mask_wearing, 0.6)\n\n# Running the model\nrun(model_sir, ndays = 50, seed = 1912)\n\n_________________________________________________________________________\n|Running the model...\n|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| done.\n| done.\n\n# Reproductive number\nrepnum2 &lt;- get_reproductive_number(model_sir)\n\n# Plotting\nop &lt;- par(mfrow = c(2,1))\nplot(model_sir)\nplot(repnum2, type=\"b\")\n\nWarning in min(x): no non-missing arguments to min; returning Inf\n\n\nWarning in max(x): no non-missing arguments to max; returning -Inf\n\n\nWarning in min(x): no non-missing arguments to min; returning Inf\n\n\nWarning in max(x): no non-missing arguments to max; returning -Inf\n\npar(op)\n\n\n\n# Day of peak infections\ny &lt;- get_hist_total(model_sir)\nwhich.max(y$counts[y$state == \"Infected\"]) - 1\n\n[1] 0\n\n# Number of infections on peak day\nmax(y$counts[y$state == \"Infected\"])\n\n[1] 1"
+  },
+  {
+    "objectID": "part3.html",
+    "href": "part3.html",
+    "title": "Part 3 Solutions",
+    "section": "",
+    "text": "library(epiworldR)\n\n# Initialize model\nmodel_seirconn &lt;- ModelSEIRCONN(\n  name              = \"Flu\",\n  n                 = 10000, \n  prevalence        = 0.01, \n  contact_rate      = 2,\n  prob_transmission = 0.5,\n  incubation_days   = 2,\n  prob_recovery     = 1/7\n)\n\n# Generating a saver\nsaver &lt;- make_saver(\"reproductive\")\n\n# Running and printing\nrun_multiple(model_seirconn, ndays = 20, nsims = 100, saver = saver, nthread = 2)\n\nStarting multiple runs (100)\n_________________________________________________________________________\n_________________________________________________________________________\n||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| done.\n done.\n\n# Plotting\nseirconn_100_r &lt;- run_multiple_get_results(model_seirconn)$reproductive\nplot(seirconn_100_r)"
+  },
+  {
+    "objectID": "part3.html#exercise-1",
+    "href": "part3.html#exercise-1",
+    "title": "Part 3 Solutions",
+    "section": "",
+    "text": "library(epiworldR)\n\n# Initialize model\nmodel_seirconn &lt;- ModelSEIRCONN(\n  name              = \"Flu\",\n  n                 = 10000, \n  prevalence        = 0.01, \n  contact_rate      = 2,\n  prob_transmission = 0.5,\n  incubation_days   = 2,\n  prob_recovery     = 1/7\n)\n\n# Generating a saver\nsaver &lt;- make_saver(\"reproductive\")\n\n# Running and printing\nrun_multiple(model_seirconn, ndays = 20, nsims = 100, saver = saver, nthread = 2)\n\nStarting multiple runs (100)\n_________________________________________________________________________\n_________________________________________________________________________\n||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| done.\n done.\n\n# Plotting\nseirconn_100_r &lt;- run_multiple_get_results(model_seirconn)$reproductive\nplot(seirconn_100_r)"
+  },
+  {
+    "objectID": "part3.html#exercise-2",
+    "href": "part3.html#exercise-2",
+    "title": "Part 3 Solutions",
+    "section": "Exercise 2",
+    "text": "Exercise 2\n\n# Initialize Model\nmodel_seirconn &lt;- ModelSEIRCONN(\n  name              = \"Flu\",\n  n                 = 10000, \n  prevalence        = 0.01, \n  contact_rate      = 2,\n  prob_transmission = 0.5,\n  incubation_days   = 2,\n  prob_recovery     = 1/7\n)\n\n# Creating a tool\nepitool &lt;- tool(\n  name = \"Vaccine\",\n  susceptibility_reduction = .9,\n  transmission_reduction = .5,\n  recovery_enhancer = .5, \n  death_reduction = .9\n)\n\n# Adding a global action\nvaccine_day_10 &lt;- globalaction_tool(epitool, prob = .5, day = 10)\nadd_global_action(model_seirconn, vaccine_day_10)\n\n# Generating a saver\nsaver &lt;- make_saver(\"reproductive\")\n# Running the model\nrun_multiple(model_seirconn, ndays = 20, nsims = 100, saver = saver, \n             nthread = 2)\n\nStarting multiple runs (100)\n_________________________________________________________________________\n_________________________________________________________________________\n||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| done.\n done.\n\n# Plotting\nseirconn_100_r2 &lt;- run_multiple_get_results(model_seirconn)$reproductive\nplot(seirconn_100_r2)"
+  }
+]
