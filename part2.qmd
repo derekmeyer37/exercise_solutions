@@ -5,6 +5,9 @@ title: "Part 2 Solutions"
 ## Exercise 1
 
 ```{r, fig.height=10}
+library(epiworldR)
+
+# Initialize model
 model_sir <- ModelSIRCONN(
   name              = "Flu",
   n                 = 10000, 
@@ -40,6 +43,7 @@ max(x$counts[x$state == "Infected"])
 ```
 
 ## Exercise 2
+
 ```{r, fig.height=10}
 # Removing Delta variant
 rm_virus(model_sir, 1)
@@ -74,4 +78,3 @@ which.max(y$counts[y$state == "Infected"]) - 1
 # Number of infections on peak day
 max(y$counts[y$state == "Infected"])
 ```
-

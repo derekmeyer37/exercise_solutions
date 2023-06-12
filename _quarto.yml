@@ -3,7 +3,7 @@ project:
   output-dir: docs
 
 website:
-  title: "exercise_solutions"
+  title: "epiworldR Workshop - Exercise Solutions"
   navbar:
     left:
       - href: index.qmd

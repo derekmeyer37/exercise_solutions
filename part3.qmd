@@ -3,7 +3,11 @@ title: "Part 3 Solutions"
 ---
 
 ## Exercise 1
-```{r, fig.height=10}
+
+```{r}
+library(epiworldR)
+
+# Initialize model
 model_seirconn <- ModelSEIRCONN(
   name              = "Flu",
   n                 = 10000, 
@@ -26,7 +30,8 @@ plot(seirconn_100_r)
 ```
 
 ## Exercise 2
-```{r, fig.height=10}
+
+```{r}
 # Initialize Model
 model_seirconn <- ModelSEIRCONN(
   name              = "Flu",
@@ -61,4 +66,3 @@ run_multiple(model_seirconn, ndays = 20, nsims = 100, saver = saver,
 seirconn_100_r2 <- run_multiple_get_results(model_seirconn)$reproductive
 plot(seirconn_100_r2)
 ```
-

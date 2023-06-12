@@ -3,8 +3,10 @@ title: "Part 1 Solutions"
 ---
 
 ## Exercise 1
-```{r, fig.height=10}
+
+```{r}
 library(epiworldR)
+
 # Initialize model
 model_seir <- ModelSEIR("COVID-19", 
                         prevalence = 0.01, 
@@ -34,11 +36,9 @@ which.max(x$counts[x$state == "Infected"]) - 1
 max(x$counts[x$state == "Infected"])
 ```
 
-
 ## Exercise 2
-```{r, fig.height=10}
+
+```{r}
 repnum <- get_reproductive_number(model_seir)
 plot(repnum, type = 'b')
 ```
-
-
