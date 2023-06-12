@@ -4,6 +4,7 @@ title: "Part 1 Solutions"
 
 ## Exercise 1
 ```{r, fig.height=10}
+library(epiworldR)
 # Initialize model
 model_seir <- ModelSEIR("COVID-19", 
                         prevalence = 0.01, 
