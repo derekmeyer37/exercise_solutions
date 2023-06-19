@@ -13,9 +13,9 @@ model_seirconn <- ModelSEIRCONN(
   n                 = 10000, 
   prevalence        = 0.01, 
   contact_rate      = 2,
-  prob_transmission = 0.5,
+  transmission_rate = 0.5,
   incubation_days   = 2,
-  prob_recovery     = 1/7
+  recovery_rate     = 1/7
 )
 
 # Generating a saver
@@ -38,9 +38,9 @@ model_seirconn <- ModelSEIRCONN(
   n                 = 10000, 
   prevalence        = 0.01, 
   contact_rate      = 2,
-  prob_transmission = 0.5,
+  transmission_rate = 0.5,
   incubation_days   = 2,
-  prob_recovery     = 1/7
+  recovery_rate     = 1/7
 )
 
 # Creating a tool

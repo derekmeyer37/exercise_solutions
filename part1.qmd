@@ -10,8 +10,8 @@ library(epiworldR)
 # Initialize model
 model_seir <- ModelSEIR("COVID-19", 
                         prevalence = 0.01, 
-                        infectiousness = 0.9,
-                        recovery = 1/4,
+                        transmission_rate = 0.9,
+                        recovery_rate = 1/4,
                         incubation_days = 4)
 
 # Adding a small world population

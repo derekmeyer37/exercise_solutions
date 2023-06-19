@@ -13,12 +13,12 @@ model_sir <- ModelSIRCONN(
   n                 = 10000, 
   prevalence        = 0.0001, 
   contact_rate      = 2.1,
-  prob_transmission = 0.5,
-  prob_recovery     = 1/4
+  transmission_rate = 0.5,
+  recovery_rate     = 1/4
   )
 
 # Building the virus
-delta <- virus(name = "Delta", prob_infecting = .3, prob_recovery = 1/4)
+delta <- virus(name = "Delta", prob_infecting = .3, recovery_rate = 1/4)
 
 # Adding the virus to the model
 add_virus(model_sir, delta, .001)
