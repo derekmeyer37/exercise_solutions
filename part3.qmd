@@ -32,17 +32,6 @@ plot(seirconn_100_r)
 ## Exercise 2
 
 ```{r}
-# Initialize Model
-model_seirconn <- ModelSEIRCONN(
-  name              = "Flu",
-  n                 = 10000, 
-  prevalence        = 0.01, 
-  contact_rate      = 2,
-  transmission_rate = 0.5,
-  incubation_days   = 2,
-  recovery_rate     = 1/7
-)
-
 # Creating a tool
 epitool <- tool(
   name = "Vaccine",
