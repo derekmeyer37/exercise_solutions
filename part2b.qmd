@@ -2,7 +2,7 @@
 title: "Part 2 Solutions"
 ---
 
-## Exercise 1
+## Exercise
 
 ```{r, fig.height=10}
 library(epiworldR)
@@ -11,20 +11,29 @@ library(epiworldR)
 model_sir <- ModelSIRCONN(
   name              = "Flu",
   n                 = 10000, 
-  prevalence        = 0.0001, 
+  prevalence        = 0.001, 
   contact_rate      = 2.1,
-  prob_transmission = 0.5,
-  prob_recovery     = 1/4
+  transmission_rate = 0.5,
+  recovery_rate     = 1/4
   )
 
 # Building the virus
-delta <- virus(name = "Delta", prob_infecting = .3, prob_recovery = 1/4)
-
+delta <- virus(name = "Delta", prob_infecting = .3, recovery_rate = 1/4)
 # Adding the virus to the model
 add_virus(model_sir, delta, .001)
 
-# Run the model
+# Building the masking tool
+masking <- tool(name = "Masking",   
+                susceptibility_reduction = 0.0,
+                transmission_reduction   = 0.3, # Only transmission
+                recovery_enhancer        = 0.0,
+                death_reduction          = 0.0)
+# Adding the tool to the model
+add_tool(model_sir, masking, proportion = 0.6)
+
+# Run the model and print summary
 run(model_sir, ndays = 75, seed = 1912)
+summary(model_sir)
 
 # Reproductive number 
 repnum <- get_reproductive_number(model_sir)
@@ -42,39 +51,3 @@ which.max(x$counts[x$state == "Infected"]) - 1
 max(x$counts[x$state == "Infected"])
 ```
 
-## Exercise 2
-
-```{r, fig.height=10}
-# Removing Delta variant
-rm_virus(model_sir, 1)
-
-# Creating a tool
-mask_wearing <- tool(
-  name = "Mask",
-  susceptibility_reduction = 0.0,
-  transmission_reduction   = 0.3, # Only transmission
-  recovery_enhancer        = 0.0,
-  death_reduction          = 0.0
-)
-
-# Adding tool to the model
-add_tool(model_sir, mask_wearing, 0.6)
-
-# Running the model
-run(model_sir, ndays = 50, seed = 1912)
-
-# Reproductive number
-repnum2 <- get_reproductive_number(model_sir)
-
-# Plotting
-op <- par(mfrow = c(2,1))
-plot(model_sir)
-plot(repnum2, type="b")
-par(op)
-
-# Day of peak infections
-y <- get_hist_total(model_sir)
-which.max(y$counts[y$state == "Infected"]) - 1
-# Number of infections on peak day
-max(y$counts[y$state == "Infected"])
-```
